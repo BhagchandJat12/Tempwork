@@ -15,6 +15,18 @@ public class UserExceptionController {
         return new ResponseEntity<>(error, HttpStatus.ALREADY_REPORTED);
     }
 
+    @ExceptionHandler(value = NotValidUserException.class)
+    public ResponseEntity<Object> wrongUserandPassword(NotValidUserException exception, WebRequest request) {
+        Error error = new Error(new Date(), exception.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = NotValidPasswordException.class)
+    public ResponseEntity<Object> wrongPassword(NotValidPasswordException exception, WebRequest request) {
+        Error error = new Error(new Date(), exception.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
     class Error {
         private Date timestamp;
         private String message;

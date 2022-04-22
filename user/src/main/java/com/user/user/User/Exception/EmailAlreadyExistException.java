@@ -2,16 +2,10 @@ package com.user.user.User.Exception;
 
 public class EmailAlreadyExistException extends RuntimeException {
 
-  public EmailAlreadyExistException(String string) {
-          this.message=string;
+  public EmailAlreadyExistException(String message) {
+    super(message);
   }
 
   private static final long serialVersionUID = 1L;
-  String message;
-
-  @Override
-  public String getMessage(){
-    return message;
-  }
 
 }
