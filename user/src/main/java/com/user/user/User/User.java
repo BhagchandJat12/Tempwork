@@ -1,5 +1,8 @@
 package com.user.user.User;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +12,10 @@ import javax.persistence.Table;
 
 @Table(name = "User")
 @Entity
-public class User {
+public class User implements Serializable{
+
+    @Serial
+    private static final long SERIALVERSIONUID=12348L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;

@@ -1,6 +1,7 @@
 package com.user.user.User.Exception;
 
 import java.util.Date;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -9,22 +10,16 @@ import org.springframework.web.context.request.WebRequest;
 
 @ControllerAdvice
 public class UserExceptionController {
-    @ExceptionHandler(value = EmailAlreadyExistException.class)
-    public ResponseEntity<Object> emailExist(EmailAlreadyExistException exception, WebRequest request) {
+    @ExceptionHandler(value = MyException.class)
+    public ResponseEntity<Object> emailExist(MyException exception, WebRequest request) {
         Error error = new Error(new Date(), exception.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(error, HttpStatus.ALREADY_REPORTED);
-    }
+        if (exception.getMessage().equals("Email Already Exist"))
+            return new ResponseEntity<>(error, HttpStatus.ALREADY_REPORTED);
+        else if (exception.getMessage().equals("Enter valid Password"))
+            return new ResponseEntity<>(error, HttpStatus.NOT_ACCEPTABLE);
+        else
+            return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
 
-    @ExceptionHandler(value = NotValidUserException.class)
-    public ResponseEntity<Object> wrongUserandPassword(NotValidUserException exception, WebRequest request) {
-        Error error = new Error(new Date(), exception.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(value = NotValidPasswordException.class)
-    public ResponseEntity<Object> wrongPassword(NotValidPasswordException exception, WebRequest request) {
-        Error error = new Error(new Date(), exception.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     class Error {
